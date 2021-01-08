@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax3 - External API</title>
+
+    <link rel="stylesheet" href="main.css">
+
+</head>
+<body>
+
+    <button id='button'>Load Github Users</button>
+    <br><br>
+    <div id="users"></div>
+    
+    <script>
+        document.getElementById('button').addEventListener('click', loadGithubUsers);
+
+        function loadGithubUsers(){
+            xhr = new XMLHttpRequest();
+
+            xhr.open('GET', 'https://api.github.com/users', true);
+            xhr.onload =function(){
+                if (xhr.status===200){
+                    var users = JSON.parse(this.responseText);
+                    var output = "";
+
+                    for (var g in users){
+                        output +=
+                        '<div class="users">'+
+                        '<img src="'+users[g].avatar_url+'"width="70"> height="70">'+
+                        '<ul>'+
+                        '<li>ID: '+ users[g].id+ '</li>'+
+                        '<li>ID: '+ users[g].login+ '</li>'+
+                        '</ul>'+
+                        '</div>'
+                    }
+                    document.getElementById('users').innerHTML = output;
+                }
+            }
+            xhr.send()
+        }
+    </script>
+</body>
+</html>
